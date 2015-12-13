@@ -14,6 +14,8 @@ class Main extends Sprite {
 	private var left:Bool;
 	private var right:Bool;
 
+	private var rotationSpeed:Int;
+
 	public function new() {
 		super();
 
@@ -31,6 +33,8 @@ class Main extends Sprite {
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_onKeyDown);
 		stage.addEventListener(KeyboardEvent.KEY_UP, stage_onKeyUp);
 		stage.addEventListener(Event.ENTER_FRAME, this_onEnterFrame);
+
+		rotationSpeed = 2;
 	}
 
 	private function stage_onKeyDown(event:KeyboardEvent):Void {
@@ -49,10 +53,10 @@ class Main extends Sprite {
 
 	private function this_onEnterFrame(event:Event):Void {
 		if(left) {
-			Square.rotation += -5;
+			Square.rotation += -1*rotationSpeed;
 		}
 		if(right) {
-			Square.rotation += 5;
+			Square.rotation += rotationSpeed;
 		}
 	}
 }
