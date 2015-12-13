@@ -9,6 +9,7 @@ import openfl.Assets;
 
 class Main extends Sprite {
 	private var Square:Sprite;
+	private var Image:Bitmap;
 
 	private var left:Bool;
 	private var right:Bool;
@@ -17,9 +18,14 @@ class Main extends Sprite {
 		super();
 
 		Square = new Sprite();
-		Square.addChild(new Bitmap(Assets.getBitmapData("assets/sprite.png")));
 		Square.x = stage.stageWidth/2;
 		Square.y = stage.stageHeight/2;
+
+		Image = new Bitmap(Assets.getBitmapData("assets/sprite.png"));
+		Image.x = -(Image.width)/2;
+		Image.y = -(Image.height)/2;
+
+		Square.addChild(Image);
 		addChild(Square);
 
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_onKeyDown);
