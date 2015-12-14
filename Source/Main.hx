@@ -15,6 +15,9 @@ class Main extends Sprite {
 	private var image:Bitmap;
 	private var image2:Bitmap;
 	private var gameContainer:Sprite;
+	private var trailContainer:Sprite;
+	//List for square trail
+	private var trail:Array<Sprite>;
 
 	private var left:Bool;
 	private var right:Bool;
@@ -42,6 +45,11 @@ class Main extends Sprite {
 		//All game objects with become children of gameContainer, which will then become
 		//a child of Main
 		gameContainer = new Sprite();
+		//Contains the trail left behind by the square.  Separated from the gameContainer so
+		//that trails can be properly drawn beneath the square and the other game objects.
+		trailContainer = new Sprite();
+
+		addChild(trailContainer);
 
 		square.addChild(image);
 		square2.addChild(image2);
@@ -53,6 +61,7 @@ class Main extends Sprite {
 		stage.addEventListener(KeyboardEvent.KEY_UP, stage_onKeyUp);
 		stage.addEventListener(Event.ENTER_FRAME, this_onEnterFrame);
 
+		trail = new Array<Sprite>();
 		rotationSpeed = 2;
 		moveSpeed = 3;
 	}
@@ -87,5 +96,25 @@ class Main extends Sprite {
 		//Transform gameContainer so that it offsets square transformations and keeps square centered on the stage
 		gameContainer.x = -square.x + stage.stageWidth/2;
 		gameContainer.y = -square.y + stage.stageHeight/2;
+
+		//Add to trail left behind by square
+		//TODO: some of the trail pieces seem to end up slightly off-rotation from the square...
+		var t:Sprite = new Sprite();
+		t.x = square.x;
+		t.y = square.y;
+		t.rotation = square.rotation;
+
+		var t_image = new Bitmap(Assets.getBitmapData("assets/sprite_green.png"));
+		t_image.x = -(t_image.width)/2;
+		t_image.y = -(t_image.height)/2;
+		t.addChild(t_image);
+
+		trail.push(t);
+
+		//Offset to center most recent trail piece
+		trailContainer.x = -t.x + stage.stageWidth/2;
+		trailContainer.y = -t.y + stage.stageHeight/2;
+		
+		trailContainer.addChild(t);
 	}
 }
