@@ -26,7 +26,7 @@ class Main extends Sprite {
 		Square.x = stage.stageWidth/2;
 		Square.y = stage.stageHeight/2;
 
-		Image = new Bitmap(Assets.getBitmapData("assets/sprite.png"));
+		Image = new Bitmap(Assets.getBitmapData("assets/sprite_multicolor.png"));
 		Image.x = -(Image.width)/2;
 		Image.y = -(Image.height)/2;
 
