@@ -7,6 +7,8 @@ import openfl.events.KeyboardEvent;
 import openfl.ui.Keyboard;
 import openfl.Assets;
 
+import Math;
+
 class Main extends Sprite {
 	private var Square:Sprite;
 	private var Image:Bitmap;
@@ -15,6 +17,7 @@ class Main extends Sprite {
 	private var right:Bool;
 
 	private var rotationSpeed:Int;
+	private var moveSpeed:Int;
 
 	public function new() {
 		super();
@@ -35,6 +38,7 @@ class Main extends Sprite {
 		stage.addEventListener(Event.ENTER_FRAME, this_onEnterFrame);
 
 		rotationSpeed = 2;
+		moveSpeed = 3;
 	}
 
 	private function stage_onKeyDown(event:KeyboardEvent):Void {
@@ -58,5 +62,9 @@ class Main extends Sprite {
 		if(right) {
 			Square.rotation += rotationSpeed;
 		}
+
+		var radians:Float = Square.rotation*(Math.PI/180);
+		Square.y += moveSpeed*Math.sin(radians);
+		Square.x += moveSpeed*Math.cos(radians);
 	}
 }
