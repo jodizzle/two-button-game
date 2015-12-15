@@ -11,9 +11,15 @@ import Math;
 
 class Main extends Sprite {
 	private var square:Sprite;
+	private var leftLeg:Sprite;
+	private var rightLeg:Sprite;
 	private var square2:Sprite;
+
 	private var image:Bitmap;
 	private var image2:Bitmap;
+	private var leftLegImage:Bitmap;
+	private var rightLegImage:Bitmap;
+
 	private var gameContainer:Sprite;
 	private var trailContainer:Sprite;
 	//List for square trail
@@ -29,32 +35,64 @@ class Main extends Sprite {
 		super();
 
 		square = new Sprite();
+		square2 = new Sprite();
+
+		image = new Bitmap(Assets.getBitmapData("assets/sprite_multicolor.png"));
+		//Originally used to rotate about center, seems redundant with the centered camera
+		// image.x = -(image.width)/2;
+		// image.y = -(image.height)/2;
+
+		image2 = new Bitmap(Assets.getBitmapData("assets/sprite.png"));
+		// image2.x = -(image2.width)/2;
+		// image2.y = -(image2.height)/2;
+
+		square.addChild(image);
+		square2.addChild(image2);
+
 		square.x = stage.stageWidth/2;
 		square.y = stage.stageHeight/2;
-		square2 = new Sprite();
+
 		square2.x = 100;
 		square2.y = 100;
 
-		image = new Bitmap(Assets.getBitmapData("assets/sprite_multicolor.png"));
-		image.x = -(image.width)/2;
-		image.y = -(image.height)/2;
-		image2 = new Bitmap(Assets.getBitmapData("assets/sprite.png"));
-		image.x = -(image2.width)/2;
-		image.y = -(image2.height)/2;
+		leftLeg = new Sprite();
+		rightLeg = new Sprite();
 
-		//All game objects with become children of gameContainer, which will then become
-		//a child of Main
-		gameContainer = new Sprite();
+		leftLegImage = new Bitmap(Assets.getBitmapData("assets/leg.png"));
+		// leftLegImage.x = -(leftLegImage.width)/2;
+		// leftLegImage.y = -(leftLegImage.height)/2;
+
+		rightLegImage = new Bitmap(Assets.getBitmapData("assets/leg.png"));
+		// rightLegImage.x = -(rightLegImage.width)/2;
+		// rightLegImage.y = -(rightLegImage.height)/2;
+
+		leftLeg.addChild(leftLegImage);
+		rightLeg.addChild(rightLegImage);
+
+		leftLeg.x = 0;
+		leftLeg.y = 0;
+		leftLeg.rotation = 90;
+
+		rightLeg.x = 0;
+		rightLeg.y = square.height - rightLeg.width;
+		rightLeg.rotation = 90;
+
+		square.addChild(leftLeg);
+		square.addChild(rightLeg);
+
 		//Contains the trail left behind by the square.  Separated from the gameContainer so
 		//that trails can be properly drawn beneath the square and the other game objects.
 		trailContainer = new Sprite();
 
 		addChild(trailContainer);
 
-		square.addChild(image);
-		square2.addChild(image2);
+		//All game objects with become children of gameContainer, which will then become
+		//a child of Main
+		gameContainer = new Sprite();
+
 		gameContainer.addChild(square);
 		gameContainer.addChild(square2);
+
 		addChild(gameContainer);
 
 		stage.addEventListener(KeyboardEvent.KEY_DOWN, stage_onKeyDown);
@@ -105,8 +143,8 @@ class Main extends Sprite {
 		t.rotation = square.rotation;
 
 		var t_image = new Bitmap(Assets.getBitmapData("assets/sprite_green.png"));
-		t_image.x = -(t_image.width)/2;
-		t_image.y = -(t_image.height)/2;
+		// t_image.x = -(t_image.width)/2;
+		// t_image.y = -(t_image.height)/2;
 		t.addChild(t_image);
 
 		trail.push(t);
